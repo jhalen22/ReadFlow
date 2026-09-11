@@ -20,7 +20,7 @@ export default function LoginPage() {
 
     // TODO: replace with real authentication call (e.g. Supabase auth)
     console.log("Logging in with:", { email, password });
-    navigate("/");
+    navigate("/dashboard");
   }
 
   return (

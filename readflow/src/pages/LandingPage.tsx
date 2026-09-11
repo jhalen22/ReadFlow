@@ -6,7 +6,7 @@ const FEATURES = [
     icon: BookOpenCheck,
     title: "Structured comprehension paths",
     description:
-      "Lessons scaffold learners from literal to critical comprehension, Aligned with educational standards.",
+      "Lessons scaffold learners from literal to critical comprehension, aligned with educational standards.",
   },
   {
     icon: LineChart,
@@ -25,42 +25,46 @@ const FEATURES = [
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white text-slate-900">
-      {/* Nav */}
-      <header className="bg-ink-900">
-        <div className="mx-auto max-w-6xl px-6 py-5 flex items-center justify-between">
-          <span className="text-xl font-extrabold tracking-tight">
-            <span className="text-slate-100">Read</span>
-            <span className="text-flow-400">Flow</span>
-          </span>
+      {/* Header + Hero share one continuous background so there's no seam between them */}
+      <div className="relative bg-ink-900 overflow-hidden">
+        {/* Decorative glow accents — kept away from the very top edge so they never get hard-clipped into a visible line */}
+        <div className="pointer-events-none absolute top-1/3 -right-32 w-[28rem] h-[28rem] rounded-full bg-flow-400/10 blur-[100px]" />
+        <div className="pointer-events-none absolute bottom-0 -left-32 w-[28rem] h-[28rem] rounded-full bg-flow-500/10 blur-[100px]" />
 
-          <nav className="hidden sm:flex items-center gap-3">
-            <Link
-              to="/login"
-              className="px-4 py-2 text-sm font-medium text-slate-200 hover:text-white transition-colors"
-            >
-              Log In
-            </Link>
-            <Link
-              to="/signup"
-              className="px-4 py-2 text-sm font-semibold rounded-lg bg-flow-400 text-ink-900 hover:bg-flow-500 transition-colors"
-            >
-              Sign Up
-            </Link>
-          </nav>
-        </div>
-      </header>
+        <header className="relative">
+          <div className="mx-auto max-w-6xl px-6 py-5 flex items-center justify-between">
+            <span className="text-xl font-extrabold tracking-tight">
+              <span className="text-slate-100">Read</span>
+              <span className="text-flow-400">Flow</span>
+            </span>
 
-      {/* Hero */}
-      <section className="bg-ink-900">
-        <div className="mx-auto max-w-6xl px-6 pt-16 pb-24 text-center">
-          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white max-w-3xl mx-auto">
+            <nav className="hidden sm:flex items-center gap-3">
+              <Link
+                to="/login"
+                className="px-4 py-2 text-sm font-medium text-slate-200 hover:text-white transition-colors"
+              >
+                Log In
+              </Link>
+              <Link
+                to="/signup"
+                className="px-4 py-2 text-sm font-semibold rounded-lg bg-flow-400 text-ink-900 hover:bg-flow-500 transition-colors"
+              >
+                Sign Up
+              </Link>
+            </nav>
+          </div>
+        </header>
+
+        <div className="relative mx-auto max-w-6xl px-6 min-h-[calc(100vh-76px)] flex flex-col items-center justify-center text-center py-16">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white max-w-3xl mx-auto">
             Structured Reading for Every Learner
           </h1>
-          <p className="mt-5 text-lg text-slate-300 max-w-2xl mx-auto">
-            ReadFlow is a structured and interactive reading and comprehension platform designed for Grade 5 learners. Diagnose, guide, and monitor reading growth-all in one place.
+          <p className="mt-6 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            ReadFlow is a structured and interactive reading and comprehension platform designed
+            for Grade 5 learners. Diagnose, guide, and monitor reading growth all in one place.
           </p>
 
-          <div className="mt-9 flex items-center justify-center gap-4">
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               to="/signup"
               className="inline-flex items-center gap-2 rounded-lg bg-flow-400 px-6 py-3 text-sm font-semibold text-ink-900 hover:bg-flow-500 transition-colors"
@@ -76,10 +80,10 @@ export default function LandingPage() {
             </Link>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Features */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
+      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
         <div className="text-center mb-14">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
             Everything a reading intervention needs, in one place
@@ -91,7 +95,10 @@ export default function LandingPage() {
 
         <div className="grid sm:grid-cols-3 gap-8">
           {FEATURES.map(({ icon: Icon, title, description }) => (
-            <div key={title} className="rounded-2xl border border-slate-200 p-7">
+            <div
+              key={title}
+              className="rounded-2xl border border-slate-200 p-7 hover:border-flow-300 hover:shadow-sm transition-all"
+            >
               <div className="w-11 h-11 rounded-lg bg-flow-400/10 flex items-center justify-center mb-5">
                 <Icon size={22} className="text-flow-600" />
               </div>
