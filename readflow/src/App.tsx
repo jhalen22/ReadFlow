@@ -2,6 +2,9 @@ import { Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import SignupPage from "./pages/SignupPage.tsx";
+import ForgotPasswordPage from "./pages/Forgotpasswordpage.tsx";
+import VerificationPage from "./pages/Verificationpage.tsx";
+import ResetPasswordPage from "./pages/Resetpasswordpage.tsx";
 import StudentDashboard from "./pages/StudentDashboard.tsx";
 import MyMaterials from "./pages/MyMaterials.tsx";
 import Leaderboard from "./pages/Leaderboard.tsx";
@@ -15,6 +18,9 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/verify" element={<VerificationPage />} />
+      <Route path="/reset-password" element={<ResetPasswordPage />} />
 
       <Route path="/dashboard" element={<StudentDashboard />} />
       <Route path="/dashboard/materials" element={<MyMaterials />} />
