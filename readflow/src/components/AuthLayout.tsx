@@ -6,9 +6,19 @@ interface AuthLayoutProps {
   title: string;
   subtitle?: string;
   children: ReactNode;
+  /** Where the back link goes. Defaults to the landing page. */
+  backTo?: string;
+  /** Label shown next to the back arrow. Defaults to "Back to Home". */
+  backLabel?: string;
 }
 
-export default function AuthLayout({ title, subtitle, children }: AuthLayoutProps) {
+export default function AuthLayout({
+  title,
+  subtitle,
+  children,
+  backTo = "/",
+  backLabel = "Back to Home",
+}: AuthLayoutProps) {
   return (
     <main className="auth-page">
       <div className="auth-card">
