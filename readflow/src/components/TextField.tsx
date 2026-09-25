@@ -1,21 +1,47 @@
-import { InputHTMLAttributes } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import { useState, type InputHTMLAttributes } from "react";
 
 interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
+  showPasswordToggle?: boolean;
 }
 
-export default function TextField({ label, id, ...inputProps }: TextFieldProps) {
+export default function TextField({
+  className,
+  id,
+  label,
+  showPasswordToggle = false,
+  type,
+  ...inputProps
+}: TextFieldProps) {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const canTogglePassword = showPasswordToggle && type === "password";
+  const inputType = canTogglePassword && isPasswordVisible ? "text" : type;
+
   return (
-    <div className="mb-5">
-      <label htmlFor={id} className="block text-sm font-medium text-slate-800 mb-1.5">
-        {label}
-      </label>
-      <input
-        id={id}
-        {...inputProps}
-        className="w-full rounded-lg border border-slate-700 px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400
-                   focus:outline-none focus:ring-2 focus:ring-flow-500/30 focus:border-flow-500 transition-colors"
-      />
+    <div className="auth-field">
+      <label htmlFor={id}>{label}</label>
+      <div className="auth-input-wrapper">
+        <input
+          id={id}
+          type={inputType}
+          {...inputProps}
+          className={`auth-input${canTogglePassword ? " auth-input-password" : ""}${className ? ` ${className}` : ""}`}
+        />
+
+        {canTogglePassword && (
+          <button
+            className="auth-password-toggle"
+            type="button"
+            aria-controls={id}
+            aria-label={isPasswordVisible ? "Hide password" : "Show password"}
+            aria-pressed={isPasswordVisible}
+            onClick={() => setIsPasswordVisible((isVisible) => !isVisible)}
+          >
+            {isPasswordVisible ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
+        )}
+      </div>
     </div>
   );
 }

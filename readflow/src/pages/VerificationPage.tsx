@@ -1,107 +1,122 @@
-import { ClipboardEvent, KeyboardEvent, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import AuthLayout from "../components/AuthLayout.tsx";
+import { ClipboardEvent, FormEvent, KeyboardEvent, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthLayout from "../components/AuthLayout";
 
 const CODE_LENGTH = 4;
 
 export default function VerificationPage() {
   const navigate = useNavigate();
-  const location = useLocation() as { state?: { email?: string } };
-  const email = location.state?.email;
-
-  const [digits, setDigits] = useState<string[]>(Array(CODE_LENGTH).fill(""));
+  const [code, setCode] = useState<string[]>(Array(CODE_LENGTH).fill(""));
   const [error, setError] = useState("");
-  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
   function updateDigit(index: number, value: string) {
-    const char = value.replace(/[^0-9]/g, "").slice(-1);
-    setDigits((prev) => {
-      const next = [...prev];
-      next[index] = char;
-      return next;
-    });
-    if (char && index < CODE_LENGTH - 1) {
+    const digit = value.replace(/\D/g, "").slice(-1);
+    const nextCode = [...code];
+    nextCode[index] = digit;
+    setCode(nextCode);
+    if (error) setError("");
+
+    if (digit && index < CODE_LENGTH - 1) {
       inputRefs.current[index + 1]?.focus();
     }
   }
 
-  function handleKeyDown(index: number, e: KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Backspace" && !digits[index] && index > 0) {
+  function handleKeyDown(index: number, event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Backspace" && !code[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
-    }
-  }
-
-  function handlePaste(e: ClipboardEvent<HTMLInputElement>) {
-    e.preventDefault();
-    const pasted = e.clipboardData.getData("text").replace(/[^0-9]/g, "").slice(0, CODE_LENGTH);
-    if (!pasted) return;
-    const next = Array(CODE_LENGTH).fill("");
-    pasted.split("").forEach((char, i) => (next[i] = char));
-    setDigits(next);
-    inputRefs.current[Math.min(pasted.length, CODE_LENGTH - 1)]?.focus();
-  }
-
-  function handleSubmit() {
-    const code = digits.join("");
-    setError("");
-
-    if (code.length < CODE_LENGTH) {
-      setError("Please enter the full verification code.");
       return;
     }
 
-    // TODO: replace with a real "verify OTP" API call
-    console.log("Verifying code:", code, "for", email);
-    navigate("/reset-password", { state: { email } });
+    if (event.key === "ArrowLeft" && index > 0) {
+      event.preventDefault();
+      inputRefs.current[index - 1]?.focus();
+    }
+
+    if (event.key === "ArrowRight" && index < CODE_LENGTH - 1) {
+      event.preventDefault();
+      inputRefs.current[index + 1]?.focus();
+    }
+  }
+
+  function handlePaste(event: ClipboardEvent<HTMLInputElement>) {
+    const pastedDigits = event.clipboardData
+      .getData("text")
+      .replace(/\D/g, "")
+      .slice(0, CODE_LENGTH);
+
+    if (!pastedDigits) return;
+
+    event.preventDefault();
+    const nextCode = Array(CODE_LENGTH).fill("");
+    pastedDigits.split("").forEach((digit, index) => {
+      nextCode[index] = digit;
+    });
+    setCode(nextCode);
+    setError("");
+    inputRefs.current[Math.min(pastedDigits.length, CODE_LENGTH) - 1]?.focus();
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (code.some((digit) => !digit)) {
+      setError("Please enter all four digits.");
+      return;
+    }
+
+    setError("");
+    navigate("/reset-password");
+  }
+
+  function handleResend() {
+    setCode(Array(CODE_LENGTH).fill(""));
+    setError("");
+    inputRefs.current[0]?.focus();
   }
 
   return (
-    <AuthLayout title="Verification" backTo="/login" backLabel="Back to Login">
-      <div>
-        <label className="block text-sm font-medium text-slate-800 mb-3">
-          Enter verification code
-          {email && <span className="block text-xs font-normal text-slate-500 mt-1">Sent to {email}</span>}
-        </label>
-
-        <div className="flex items-center gap-3 mb-2">
-          {digits.map((digit, i) => (
+    <AuthLayout title="Verification" subtitle="Enter verification code">
+      <form className="auth-form auth-verification-form" onSubmit={handleSubmit} noValidate>
+        <div className="auth-otp-group" role="group" aria-label="Four-digit verification code">
+          {code.map((digit, index) => (
             <input
-              key={i}
-              ref={(el) => (inputRefs.current[i] = el)}
-              value={digit}
-              onChange={(e) => updateDigit(i, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(i, e)}
-              onPaste={handlePaste}
+              key={index}
+              ref={(element) => {
+                inputRefs.current[index] = element;
+              }}
+              className="auth-otp-input"
+              type="text"
               inputMode="numeric"
+              pattern="[0-9]*"
               maxLength={1}
-              className="w-16 h-16 text-center text-xl font-semibold rounded-lg border border-slate-300 text-slate-900
-                         focus:outline-none focus:ring-2 focus:ring-flow-500/30 focus:border-flow-500 transition-colors"
+              value={digit}
+              aria-label={`Verification digit ${index + 1}`}
+              autoComplete={index === 0 ? "one-time-code" : "off"}
+              onChange={(event) => updateDigit(index, event.target.value)}
+              onKeyDown={(event) => handleKeyDown(index, event)}
+              onPaste={handlePaste}
             />
           ))}
         </div>
 
-        {error && <p className="text-sm text-red-600 mb-4">{error}</p>}
+        {error && (
+          <p className="auth-error auth-otp-error" role="alert">
+            {error}
+          </p>
+        )}
 
-        <button
-          type="button"
-          onClick={handleSubmit}
-          className="w-full rounded-lg bg-ink-900 py-3 text-sm font-semibold text-white
-                     hover:bg-ink-800 transition-colors mt-4"
-        >
+        <button type="submit" className="auth-submit">
           Next
         </button>
 
-        <p className="mt-5 text-center text-sm text-slate-500">
+        <p className="auth-footer-link">
           Didn&apos;t get a code?{" "}
-          <button
-            type="button"
-            onClick={() => console.log("Resending OTP to:", email)}
-            className="text-flow-600 font-medium hover:underline"
-          >
+          <button type="button" className="auth-inline-button" onClick={handleResend}>
             Resend
           </button>
         </p>
-      </div>
+      </form>
     </AuthLayout>
   );
 }
