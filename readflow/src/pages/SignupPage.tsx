@@ -28,19 +28,18 @@ export default function SignupPage() {
       return;
     }
 
-    // TODO: replace with real account creation call (e.g. Supabase auth)
-    console.log("Creating account:", { fullName, email, password, role });
+    // Frontend prototype: account creation will be connected later.
     navigate("/login");
   }
 
   return (
-    <AuthLayout title="Create Your Account" subtitle="Join ReadFlow and start learning today">
-      <form onSubmit={handleSubmit} noValidate>
+    <AuthLayout title="Create Your Account" subtitle="Join and start learning today">
+      <form className="auth-form" onSubmit={handleSubmit} noValidate>
         <TextField
           id="fullName"
           label="Full Name"
           type="text"
-          placeholder="Enter your full name"
+          placeholder="Enter your Full name"
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
           autoComplete="name"
@@ -50,7 +49,7 @@ export default function SignupPage() {
           id="email"
           label="Email Address"
           type="email"
-          placeholder="Enter your email"
+          placeholder="Enter Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           autoComplete="email"
@@ -60,34 +59,32 @@ export default function SignupPage() {
           id="password"
           label="Password"
           type="password"
-          placeholder="Create a strong password"
+          placeholder="Enter Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           autoComplete="new-password"
+          showPasswordToggle
         />
 
         <TextField
           id="confirmPassword"
           label="Confirm Password"
           type="password"
-          placeholder="Confirm password"
+          placeholder="Confirm Password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           autoComplete="new-password"
+          showPasswordToggle
         />
 
-        <div className="mb-5">
-          <label htmlFor="role" className="block text-sm font-medium text-slate-800 mb-1.5">
-            Role
-          </label>
-          <div className="relative">
+        <div className="auth-field">
+          <label htmlFor="role">Role</label>
+          <div className="auth-select-wrapper">
             <select
               id="role"
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full appearance-none rounded-lg border border-slate-700 px-4 py-2.5 pr-10 text-sm
-                         text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-flow-500/30
-                         focus:border-flow-500 transition-colors"
+              className="auth-input auth-select"
             >
               <option value="" disabled>
                 Select your role
@@ -100,24 +97,25 @@ export default function SignupPage() {
             </select>
             <ChevronDown
               size={18}
-              className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500"
+              className="auth-select-icon"
+              aria-hidden="true"
             />
           </div>
         </div>
 
-        {error && <p className="text-sm text-red-600 mb-4">{error}</p>}
+        {error && (
+          <p className="auth-error" role="alert">
+            {error}
+          </p>
+        )}
 
-        <button
-          type="submit"
-          className="w-full rounded-lg bg-ink-900 py-3 text-sm font-semibold text-white
-                     hover:bg-ink-800 transition-colors mt-2"
-        >
-          Sign-Up
+        <button type="submit" className="auth-submit">
+          Sign Up
         </button>
 
-        <p className="mt-6 text-center text-sm text-slate-600">
+        <p className="auth-footer-link">
           Already have an account?{" "}
-          <Link to="/login" className="text-flow-600 font-medium hover:underline">
+          <Link to="/login" className="auth-text-link">
             Log In
           </Link>
         </p>

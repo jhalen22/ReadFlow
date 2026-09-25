@@ -1,0 +1,83 @@
+﻿.reading-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  background: #ffffff;
+  color: #004a4d;
+}
+
+.reading-page .reading-card {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 850px;
+  padding: 48px;
+  border-radius: 30px;
+  background: #eefbfb;
+  box-shadow: 8px 8px 0 rgba(0, 74, 77, 0.12);
+}
+
+.reading-page h1 {
+  margin-top: 0;
+  font-size: clamp(28px, 5vw, 44px);
+}
+
+.reading-page .instruction,
+.reading-page .story-box p,
+.reading-page [role="status"] {
+  line-height: 1.7;
+}
+
+.reading-page .story-box {
+  margin: 24px 0;
+  padding: 24px;
+  border-radius: 18px;
+  background: #ffffff;
+  font-size: 18px;
+}
+
+.reading-page .story-box h2 {
+  margin-top: 0;
+}
+
+.reading-page .record-button {
+  padding: 16px 24px;
+  border: none;
+  border-radius: 16px;
+  background: #ff7757;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.reading-page .record-button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.reading-page .record-button:focus-visible {
+  outline: 3px solid #004a4d;
+  outline-offset: 4px;
+}
+
+.reading-page audio {
+  display: block;
+  width: 100%;
+  margin-top: 24px;
+}
+
+@media (max-width: 600px) {
+  .reading-page {
+    padding: 18px;
+  }
+
+  .reading-page .reading-card {
+    padding: 24px;
+  }
+
+  .reading-page .record-button {
+    width: 100%;
+  }
+}

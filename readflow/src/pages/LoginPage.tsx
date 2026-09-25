@@ -18,14 +18,13 @@ export default function LoginPage() {
       return;
     }
 
-    // TODO: replace with real authentication call (e.g. Supabase auth)
-    console.log("Logging in with:", { email, password });
-    navigate("/");
+    // Frontend prototype: authentication will be connected later.
+    navigate("/diagnostic");
   }
 
   return (
-    <AuthLayout title="Welcome Back" subtitle="Log in to continue your learning journey">
-      <form onSubmit={handleSubmit} noValidate>
+    <AuthLayout title="Welcome Back!" subtitle="Log in to continue your learning journey">
+      <form className="auth-form" onSubmit={handleSubmit} noValidate>
         <TextField
           id="email"
           label="Email Address"
@@ -40,31 +39,32 @@ export default function LoginPage() {
           id="password"
           label="Password"
           type="password"
-          placeholder="Enter your password"
+          placeholder="Enter Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           autoComplete="current-password"
+          showPasswordToggle
         />
 
-        {error && <p className="text-sm text-red-600 -mt-2 mb-4">{error}</p>}
+        {error && (
+          <p className="auth-error" role="alert">
+            {error}
+          </p>
+        )}
 
-        <div className="flex justify-end mb-6">
-          <Link to="/forgot-password" className="text-sm text-flow-600 hover:underline">
+        <div className="auth-forgot-row">
+          <Link to="/forgot-password" className="auth-text-link">
             Forgot password?
           </Link>
         </div>
 
-        <button
-          type="submit"
-          className="w-full rounded-lg bg-ink-900 py-3 text-sm font-semibold text-white
-                     hover:bg-ink-800 transition-colors"
-        >
+        <button type="submit" className="auth-submit">
           Log In
         </button>
 
-        <p className="mt-6 text-center text-sm text-slate-600">
+        <p className="auth-footer-link">
           Don&apos;t have an account?{" "}
-          <Link to="/signup" className="text-flow-600 font-medium hover:underline">
+          <Link to="/signup" className="auth-text-link">
             Sign Up
           </Link>
         </p>

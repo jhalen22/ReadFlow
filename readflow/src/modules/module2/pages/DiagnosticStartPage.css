@@ -1,0 +1,163 @@
+.diagnostic-page,
+.diagnostic-page * {
+  box-sizing: border-box;
+}
+
+.diagnostic-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  background: #ffffff;
+}
+
+.diagnostic-card {
+  width: 100%;
+  max-width: 850px;
+  background: #eefbfb;
+  border-radius: 35px;
+  padding: 55px 60px;
+  position: relative;
+  overflow: hidden;
+
+  box-shadow:
+    10px 10px 0 rgba(0, 74, 77, 0.12),
+    inset 4px 4px 10px rgba(255, 255, 255, 0.9),
+    inset -4px -4px 10px rgba(0, 74, 77, 0.05);
+}
+
+.diagnostic-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+}
+
+.diagnostic-page .assessment-label {
+  display: inline-block;
+  background: #ffc755;
+  color: #004a4d;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  box-shadow: 0 4px 0 #ffad01;
+}
+
+.diagnostic-card h1 {
+  color: #004a4d;
+  font-size: clamp(40px, 6vw, 70px);
+  line-height: 0.95;
+  letter-spacing: -2px;
+  margin-bottom: 25px;
+  font-weight: 900;
+}
+
+.diagnostic-page .description {
+  color: #3c6b6d;
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 520px;
+  margin-bottom: 35px;
+}
+
+.diagnostic-page .start-btn {
+  border: none;
+  background: #ff7757;
+  color: white;
+  font-size: 17px;
+  font-weight: 700;
+  padding: 17px 30px;
+  border-radius: 18px;
+  cursor: pointer;
+
+  box-shadow:
+    0 7px 0 #fe655d,
+    0 12px 18px rgba(254, 101, 93, 0.2);
+
+  transition: 0.2s ease;
+}
+
+.diagnostic-page .start-btn:hover {
+  transform: translateY(-2px);
+}
+
+.diagnostic-page .start-btn:active {
+  transform: translateY(4px);
+}
+
+.diagnostic-page .progress {
+  margin-top: 45px;
+  display: flex;
+  gap: 10px;
+}
+
+.diagnostic-page .progress-step {
+  height: 9px;
+  flex: 1;
+  background: #d7eeee;
+  border-radius: 20px;
+}
+
+.diagnostic-page .progress-step.active {
+  background: #78b75c;
+}
+
+.diagnostic-page .progress-text {
+  margin-top: 12px;
+  color: #689193;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.diagnostic-page .shape-yellow {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: #ffc755;
+  border-radius: 50%;
+  top: -40px;
+  right: -25px;
+
+  box-shadow:
+    5px 5px 0 rgba(255, 173, 1, 0.35),
+    inset 4px 4px 10px rgba(255, 255, 255, 0.5);
+}
+
+.diagnostic-page .shape-blue {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background: #75f2f6;
+  border-radius: 22px;
+  bottom: -25px;
+  left: -20px;
+  transform: rotate(20deg);
+
+  box-shadow:
+    5px 5px 0 rgba(0, 74, 77, 0.12);
+}
+
+@media (max-width: 600px) {
+  .diagnostic-page {
+    padding: 18px;
+  }
+
+  .diagnostic-card {
+    padding: 40px 28px;
+    border-radius: 28px;
+  }
+
+  .diagnostic-card h1 {
+    font-size: 44px;
+  }
+
+  .diagnostic-page .description {
+    font-size: 16px;
+  }
+
+  .diagnostic-page .start-btn {
+    width: 100%;
+  }
+}
