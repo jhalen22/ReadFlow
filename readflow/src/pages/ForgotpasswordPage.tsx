@@ -19,7 +19,7 @@ export default function ForgotPasswordPage() {
 
     // TODO: replace with a real "send OTP" API call
     console.log("Sending OTP to:", email);
-    navigate("/verify", { state: { email } });
+    navigate("/verification", { state: { email } });
   }
 
   return (

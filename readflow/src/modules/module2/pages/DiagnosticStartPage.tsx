@@ -1,54 +1,49 @@
 import { useNavigate } from "react-router-dom";
+import mascot from "../../../assets/mascot.png";
+import { setActiveDiagnosticStatus } from "../../../utils/diagnosticOnboarding";
+import DiagnosticLayout from "../components/DiagnosticLayout";
 import "./DiagnosticStartPage.css";
 
 export default function DiagnosticStartPage() {
   const navigate = useNavigate();
 
+  function startAssessment() {
+    setActiveDiagnosticStatus("in_progress");
+    navigate("/diagnostic/reading");
+  }
+
   return (
-    <div className="diagnostic-page">
-      <main className="diagnostic-card">
+    <DiagnosticLayout
+      className="diagnostic-start-panel"
+      labelledBy="diagnostic-start-title"
+    >
+      <img
+        className="diagnostic-start-mascot"
+        src={mascot}
+        alt="ReadFlow mascot"
+      />
 
-        <div className="shape-yellow"></div>
-        <div className="shape-blue"></div>
+      <div className="diagnostic-start-content">
+        <h1 id="diagnostic-start-title">
+          Let&rsquo;s Find Your Reading Level!
+        </h1>
 
-        <section className="diagnostic-content">
+        <p className="diagnostic-start-description">
+          Read a short story aloud and answer a few questions.
+          <br />
+          Just do your best and have fun!
+        </p>
 
-          <span className="assessment-label">
-            📚 Diagnostic Assessment
-          </span>
+        <button
+          className="diagnostic-primary-button"
+          type="button"
+          onClick={startAssessment}
+        >
+          Start Assessment
+        </button>
 
-          <h1>
-            Let’s Find Your
-            <br />
-            Reading Level!
-          </h1>
-
-          <p className="description">
-            You’ll read a short story aloud and answer a few questions.
-            Just do your best!
-          </p>
-
-          <button
-            className="start-btn"
-            onClick={() => navigate("/diagnostic/reading")}
-          >
-            Start Assessment →
-          </button>
-
-          <div className="progress">
-            <div className="progress-step active"></div>
-            <div className="progress-step"></div>
-            <div className="progress-step"></div>
-            <div className="progress-step"></div>
-          </div>
-
-          <p className="progress-text">
-            Step 1 of 4 • Get Ready
-          </p>
-
-        </section>
-
-      </main>
-    </div>
+        <p className="diagnostic-start-note">It only takes a few minutes.</p>
+      </div>
+    </DiagnosticLayout>
   );
 }

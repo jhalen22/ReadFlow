@@ -1,83 +1,95 @@
-﻿.reading-page {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 30px;
-  background: #ffffff;
+.diagnostic-reading-panel {
+  text-align: center;
+}
+
+.diagnostic-reading-header {
+  max-width: 760px;
+  margin: 0 auto 24px;
+}
+
+.diagnostic-reading-header h1 {
+  margin: 0;
+  color: #10231f;
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.diagnostic-reading-header p {
+  margin: 12px auto 0;
+  color: #17372f;
+  font-size: clamp(1rem, 1.7vw, 1.12rem);
+  line-height: 1.55;
+}
+
+.diagnostic-story-card {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 40px);
+  border: 2px solid rgba(0, 74, 77, 0.12);
+  border-radius: 22px;
+  background: #fff9e9;
+  box-shadow: 0 10px 24px rgba(0, 55, 47, 0.1);
+  text-align: left;
+}
+
+.diagnostic-story-card h2 {
+  margin: 0 0 22px;
   color: #004a4d;
+  font-size: clamp(1.45rem, 2.5vw, 1.9rem);
+  text-align: center;
 }
 
-.reading-page .reading-card {
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 850px;
-  padding: 48px;
-  border-radius: 30px;
-  background: #eefbfb;
-  box-shadow: 8px 8px 0 rgba(0, 74, 77, 0.12);
+.diagnostic-story-card p {
+  margin: 0 0 16px;
+  color: #172b27;
+  font-size: clamp(1.03rem, 1.7vw, 1.18rem);
+  line-height: 1.75;
 }
 
-.reading-page h1 {
-  margin-top: 0;
-  font-size: clamp(28px, 5vw, 44px);
+.diagnostic-story-card p:last-child {
+  margin-bottom: 0;
 }
 
-.reading-page .instruction,
-.reading-page .story-box p,
-.reading-page [role="status"] {
-  line-height: 1.7;
-}
-
-.reading-page .story-box {
-  margin: 24px 0;
-  padding: 24px;
-  border-radius: 18px;
-  background: #ffffff;
-  font-size: 18px;
-}
-
-.reading-page .story-box h2 {
-  margin-top: 0;
-}
-
-.reading-page .record-button {
-  padding: 16px 24px;
-  border: none;
-  border-radius: 16px;
-  background: #ff7757;
-  color: #ffffff;
-  font-size: 17px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.reading-page .record-button:disabled {
-  opacity: 0.65;
-  cursor: wait;
-}
-
-.reading-page .record-button:focus-visible {
-  outline: 3px solid #004a4d;
-  outline-offset: 4px;
-}
-
-.reading-page audio {
-  display: block;
-  width: 100%;
+.diagnostic-recording-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 24px;
 }
 
-@media (max-width: 600px) {
-  .reading-page {
-    padding: 18px;
+.diagnostic-record-button--active {
+  background: #9f3c36;
+}
+
+.diagnostic-recording-status {
+  min-height: 1.5em;
+  margin: 12px 0 0;
+  color: #17372f;
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.diagnostic-recording-review {
+  width: min(100%, 620px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.diagnostic-recording-review audio {
+  width: 100%;
+}
+
+@media (max-width: 520px) {
+  .diagnostic-reading-header {
+    margin-bottom: 18px;
   }
 
-  .reading-page .reading-card {
-    padding: 24px;
-  }
-
-  .reading-page .record-button {
-    width: 100%;
+  .diagnostic-story-card {
+    padding: 22px 18px;
+    border-radius: 18px;
   }
 }

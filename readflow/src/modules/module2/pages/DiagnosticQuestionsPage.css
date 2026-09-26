@@ -1,0 +1,137 @@
+.diagnostic-questions-panel {
+  max-width: 900px;
+}
+
+.diagnostic-questions-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.diagnostic-questions-header h1 {
+  margin: 0;
+  color: #10231f;
+  font-size: clamp(1.9rem, 4vw, 2.65rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.diagnostic-questions-header p {
+  margin: 10px 0 0;
+  color: #17372f;
+  font-size: clamp(1rem, 1.7vw, 1.1rem);
+}
+
+.diagnostic-question-card {
+  padding: clamp(24px, 4vw, 38px);
+  border-radius: 22px;
+  background: #fff9e9;
+  box-shadow: 0 10px 24px rgba(0, 55, 47, 0.1);
+}
+
+.diagnostic-question-counter {
+  margin: 0 0 10px;
+  color: #006065;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.diagnostic-question-card h2 {
+  margin: 0 0 24px;
+  color: #142b26;
+  font-size: clamp(1.25rem, 2.4vw, 1.65rem);
+  line-height: 1.35;
+}
+
+.diagnostic-answer-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.diagnostic-answer {
+  position: relative;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 14px 18px;
+  border: 2px solid rgba(0, 74, 77, 0.2);
+  border-radius: 15px;
+  background: #ffffff;
+  color: #17302a;
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.35;
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease, transform 150ms ease;
+}
+
+.diagnostic-answer:hover {
+  border-color: #004a4d;
+  transform: translateY(-1px);
+}
+
+.diagnostic-answer--selected {
+  border-color: #004a4d;
+  background: #e6f3dc;
+  box-shadow: 0 0 0 2px rgba(0, 74, 77, 0.12);
+}
+
+.diagnostic-answer input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.diagnostic-answer:has(input:focus-visible) {
+  outline: 3px solid #ffc755;
+  outline-offset: 3px;
+}
+
+.diagnostic-answer-indicator {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  border: 2px solid #426861;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.diagnostic-answer--selected .diagnostic-answer-indicator {
+  border: 5px solid #004a4d;
+}
+
+.diagnostic-question-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.diagnostic-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 650px) {
+  .diagnostic-answer-list {
+    grid-template-columns: 1fr;
+  }
+
+  .diagnostic-question-card {
+    padding: 22px 18px;
+  }
+}

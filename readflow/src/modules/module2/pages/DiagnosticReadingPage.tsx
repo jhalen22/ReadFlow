@@ -1,7 +1,12 @@
-﻿import { useAudioRecorder } from "../hooks/useAudioRecorder";
+import { Mic, Square } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import DiagnosticLayout from "../components/DiagnosticLayout";
+import { diagnosticPassage } from "../data/diagnosticData";
+import { useAudioRecorder } from "../hooks/useAudioRecorder";
 import "./DiagnosticReadingPage.css";
 
 export default function DiagnosticReadingPage() {
+  const navigate = useNavigate();
   const {
     audioURL,
     isRecording,
@@ -12,43 +17,43 @@ export default function DiagnosticReadingPage() {
     stopRecording,
   } = useAudioRecorder();
 
-  return (
-    <main className="reading-page">
-      <section className="reading-card" aria-label="Diagnostic reading">
-        <h1>Read the Story Aloud</h1>
+  const recordingBusy = isStarting || isStopping;
 
-        <p className="instruction">
+  return (
+    <DiagnosticLayout
+      className="diagnostic-reading-panel"
+      labelledBy="diagnostic-reading-title"
+    >
+      <header className="diagnostic-reading-header">
+        <h1 id="diagnostic-reading-title">Read the Story Aloud</h1>
+
+        <p>
           Read the story below. When you're ready, press the microphone button
           and begin reading.
         </p>
+      </header>
 
-        <div className="story-box">
-          <h2>The Lost Kite</h2>
+      <article className="diagnostic-story-card">
+        <h2>{diagnosticPassage.title}</h2>
+        {diagnosticPassage.paragraphs.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
+      </article>
 
-          <p>
-            Mia went to the park with her red kite. The wind was strong,
-            and the kite flew high in the sky. Mia smiled as she held
-            the string tightly.
-          </p>
-
-          <p>
-            Suddenly, the string slipped from her hand. The kite flew
-            over the trees and disappeared.
-          </p>
-
-          <p>
-            Mia looked around and saw a boy holding the red kite near
-            the playground. He gave it back to her, and Mia thanked him.
-            She held the string more carefully and continued flying her kite.
-          </p>
-        </div>
-        <p role="status">{message}</p>
+      <div className="diagnostic-recording-controls">
         <button
-          className="record-button"
+          className={`diagnostic-primary-button diagnostic-record-button${
+            isRecording ? " diagnostic-record-button--active" : ""
+          }`}
           type="button"
-          disabled={isStarting || isStopping}
+          disabled={recordingBusy}
           onClick={isRecording ? stopRecording : startRecording}
         >
+          {isRecording ? (
+            <Square size={19} fill="currentColor" aria-hidden="true" />
+          ) : (
+            <Mic size={21} aria-hidden="true" />
+          )}
           {isStarting
             ? "Opening microphone..."
             : isStopping
@@ -57,10 +62,24 @@ export default function DiagnosticReadingPage() {
                 ? "Stop recording"
                 : "Start recording"}
         </button>
+
+        <p className="diagnostic-recording-status" role="status" aria-live="polite">
+          {message}
+        </p>
+
         {audioURL && (
-          <audio controls src={audioURL} aria-label="Your reading recording" />
+          <div className="diagnostic-recording-review">
+            <audio controls src={audioURL} aria-label="Your reading recording" />
+            <button
+              className="diagnostic-primary-button"
+              type="button"
+              onClick={() => navigate("/diagnostic/questions")}
+            >
+              Continue to Questions
+            </button>
+          </div>
         )}
-      </section>
-    </main>
+      </div>
+    </DiagnosticLayout>
   );
 }

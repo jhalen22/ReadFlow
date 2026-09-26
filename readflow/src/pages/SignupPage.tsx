@@ -3,6 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import AuthLayout from "../components/AuthLayout.tsx";
 import TextField from "../components/TextField.tsx";
+import {
+  initializeDiagnosticOnboarding,
+  normalizeDiagnosticEmail,
+  type TemporaryUserRole,
+} from "../utils/diagnosticOnboarding.ts";
 
 const ROLES = ["Student", "Teacher", "General User"];
 
@@ -28,7 +33,18 @@ export default function SignupPage() {
       return;
     }
 
-    // Frontend prototype: account creation will be connected later.
+    const normalizedEmail = normalizeDiagnosticEmail(email);
+
+    const temporaryRole: TemporaryUserRole =
+      role === "Teacher"
+        ? "teacher"
+        : role === "General User"
+          ? "general_user"
+          : "student";
+
+    // Frontend prototype: account role and diagnostic state will be replaced
+    // with authenticated database state later.
+    initializeDiagnosticOnboarding(normalizedEmail, temporaryRole);
     navigate("/login");
   }
 

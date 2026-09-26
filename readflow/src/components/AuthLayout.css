@@ -73,6 +73,27 @@
   width: min(100%, 335px);
 }
 
+.auth-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 22px;
+  color: #004a4d;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth-back-link:hover {
+  text-decoration: underline;
+}
+
+.auth-back-link:focus-visible {
+  border-radius: 4px;
+  outline: 2px solid #004a4d;
+  outline-offset: 4px;
+}
+
 .auth-header {
   margin-bottom: 26px;
   text-align: center;

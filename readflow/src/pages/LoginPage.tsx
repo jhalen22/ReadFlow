@@ -2,6 +2,13 @@ import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout.tsx";
 import TextField from "../components/TextField.tsx";
+import {
+  getDiagnosticStatus,
+  getTemporaryUserRole,
+  normalizeDiagnosticEmail,
+  requiresDiagnostic,
+  setActiveDiagnosticLearner,
+} from "../utils/diagnosticOnboarding.ts";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -18,8 +25,21 @@ export default function LoginPage() {
       return;
     }
 
-    // Frontend prototype: authentication will be connected later.
-    navigate("/diagnostic");
+    const normalizedEmail = normalizeDiagnosticEmail(email);
+
+    // Frontend prototype: replace these lookups with the authenticated user's
+    // role and `diagnostic_completed` database field later.
+    const role = getTemporaryUserRole(normalizedEmail);
+
+    if (!requiresDiagnostic(role)) {
+      setActiveDiagnosticLearner(null);
+      navigate("/dashboard");
+      return;
+    }
+
+    setActiveDiagnosticLearner(normalizedEmail);
+    const diagnosticStatus = getDiagnosticStatus(normalizedEmail);
+    navigate(diagnosticStatus === "completed" ? "/dashboard" : "/diagnostic");
   }
 
   return (

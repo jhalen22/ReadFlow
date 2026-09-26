@@ -1,4 +1,6 @@
 import { ReactNode } from "react";
+import { ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 import mascot from "../assets/mascot.png";
 import "./AuthLayout.css";
 
@@ -31,6 +33,10 @@ export default function AuthLayout({
 
         <section className="auth-form-panel">
           <div className="auth-form-container">
+            <Link className="auth-back-link" to={backTo}>
+              <ArrowLeft size={17} aria-hidden="true" />
+              {backLabel}
+            </Link>
             <header className="auth-header">
               <h1 className="auth-heading">{title}</h1>
               {subtitle && <p className="auth-subtitle">{subtitle}</p>}
